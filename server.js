@@ -1,20 +1,37 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const businessFormRoute = require('./routes/businessForm');
-const studentFormRoute = require('./routes/studentForm');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+
+// Load environment variables from .env file
+dotenv.config();
+
+// Import routes
+const businessForm = require('./Routes/businessForm');
+const studentForm = require('./Routes/studentForm');
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Middleware
+app.use(bodyParser.json());
 
-mongoose.connect('mongodb+srv://vamsigarikamukku0204:newVamsi1234@cluster0.kpm25ye.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
-.then(() => console.log('DB connected'))
-.catch((err) => console.error('DB connection error:', err))
+// Routes
+app.use('/auth/business-form', businessForm);
+app.use('/auth/student-form', studentForm); // Corrected the typo
 
-app.use('/auth', businessFormRoute);
-app.use('/auth', studentFormRoute);
+const PORT = process.env.PORT || 5000;
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://vamsigarikamukku0204:newVamsi1234@cluster0.kpm25ye.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
-app.listen(5000, () => {
-    console.log('Server is running on port 5000');
-});
+// Database connection
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('DB connected');
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('DB connection error:', err);
+  });
+
+  

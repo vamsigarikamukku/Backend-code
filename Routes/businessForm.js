@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const BusinessData = require('../Models/BusinessForm');
 
-router.post('/business-form', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         console.log(req.body); 
         const { first_name, last_name, email, company_name, field, budget, mobile, address, city, state, pincode } = req.body;
