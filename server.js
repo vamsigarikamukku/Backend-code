@@ -10,11 +10,16 @@ mongoose.connect("mongodb+srv://vamsigarikamukku0204:newVamsi1234@cluster0.kpm25
 .then(()=>console.log("Db Connected...."))
 .catch((e)=>console.log(e))
 
-app.use(cors({
-     origin: 'http://localhost:5173'
-}));
-
-app.use(express.json())
+const corsOptions = {
+     origin: ['http://localhost:5173', 'https://jestdevelopers.in'],
+     optionsSuccessStatus: 200
+ };
+ 
+ app.use(cors(corsOptions));
+ 
+ app.get('/', (req, res) => {
+     res.send('Hello World!');
+ });
 
 app.use('/auth', require('./Routes/authRoutes'))  
 
