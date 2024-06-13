@@ -1,62 +1,17 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const BusinessDataSchema = new Schema({
-
-    first_name: {
-          type: String,
-          required: true
-        },
-
-    last_name: { 
-        type: String, 
-        required: true
-        },
-
-    email: { 
-        type: String, 
-        required: true
-        },
-
-    company_name: { 
-        type: String, 
-        required: true 
-        },
-
-    field: { 
-        type: String, 
-        required: true 
-        },
-
-    budget: { 
-        type: Number, 
-        required: true 
-        },
-
-    mobile: { 
-        type: String, 
-        required: true 
-        },
-
-    address: { 
-        type: String, 
-        required: true 
-        },
-
-    city: { 
-        type: String, 
-        required: true 
-       },
-
-    state: { 
-        type: String, 
-        required: true 
-       },
-
-    pincode: { 
-        type: String, 
-        required: true 
-    }
+const BusinessFormSchema = new mongoose.Schema({
+    first_name: String,
+    last_name: String,
+    email: String,
+    company_name: String,
+    field: String,
+    budget: Number,
+    mobile: String,
+    address: String,
+    city: String,
+    state: String,
+    pincode: String
 });
 
-module.exports = mongoose.model('BusinessData', BusinessDataSchema);
+module.exports = mongoose.model('BusinessData', BusinessFormSchema);

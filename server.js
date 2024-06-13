@@ -1,26 +1,20 @@
-const express = require("express")
-const mongoose = require("mongoose")
-const cors = require('cors')
-const {BusinessData} = require("./Models/BusinessForm")
- 
-const app = express()
-const port = 1234
+const express = require('express');
+const mongoose = require('mongoose');
+const businessFormRoute = require('./routes/businessForm');
+const studentFormRoute = require('./routes/studentForm');
 
-mongoose.connect("mongodb+srv://vamsigarikamukku0204:newVamsi1234@cluster0.kpm25ye.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-.then(()=>console.log("Db Connected...."))
-.catch((e)=>console.log(e))
+const app = express();
 
-const corsOptions = {
-     origin: ['http://localhost:5173', 'https://jestdevelopers.in'],
-     optionsSuccessStatus: 200
- };
- 
- app.use(cors(corsOptions));
- 
- app.get('/', (req, res) => {
-     res.send('Hello World!');
- });
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use('/auth', require('./Routes/authRoutes'))  
+mongoose.connect('mongodb+srv://vamsigarikamukku0204:newVamsi1234@cluster0.kpm25ye.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+.then(() => console.log('DB connected'))
+.catch((err) => console.error('DB connection error:', err))
 
-app.listen(port, ()=>console.log(`Server running At ${port}`))
+app.use('/auth', businessFormRoute);
+app.use('/auth', studentFormRoute);
+
+app.listen(5000, () => {
+    console.log('Server is running on port 5000');
+});
