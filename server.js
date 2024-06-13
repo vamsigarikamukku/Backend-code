@@ -1,23 +1,29 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
+
+const app = express();
 
 // Load environment variables from .env file
 dotenv.config();
 
-// Import routes
-const businessForm = require('./Routes/businessForm');
-const studentForm = require('./Routes/studentForm');
+/// Use CORS middleware
+app.use(cors());
 
-const app = express();
+// Or you can configure it more specifically
+app.use(cors({
+  origin: 'https://jestdevelopers.in', // Allow only this origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+}));
 
-// Middleware
-app.use(bodyParser.json());
+app.use(express.json());
 
-// Routes
-app.use('/auth/business-form', businessForm);
-app.use('/auth/student-form', studentForm); // Corrected the typo
+// Your other routes and middleware
+app.use('/auth/business-form', require('./Routes/businessForm'))
+app.use('/auth/student-form', require('./Routes/studentForm'));
 
 const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://vamsigarikamukku0204:newVamsi1234@cluster0.kpm25ye.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
