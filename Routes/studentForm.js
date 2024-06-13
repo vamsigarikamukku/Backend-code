@@ -10,7 +10,6 @@ router.post('/', upload.single('pdf_file'), (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ message: 'No file uploaded or file field name is incorrect.' });
-            console.log('')
         }
 
         const studentData = new StudentData({
