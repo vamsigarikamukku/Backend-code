@@ -6,7 +6,7 @@ const StudentData = require('../Models/StudentForm');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-router.post('/student-form', upload.single('pdf_file'), (req, res) => {
+router.post('/', upload.single('pdf_file'), (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ message: 'No file uploaded or file field name is incorrect.' });
