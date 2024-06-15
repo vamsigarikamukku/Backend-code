@@ -11,27 +11,22 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ message: 'All fields are required.' });
         }
 
-        const isExist = await BusinessData.findOne({ last_name: last_name });
+        const newData = new BusinessData({
+            first_name,
+            last_name,
+            email,
+            company_name,
+            field,
+            budget,
+            mobile,
+            address,
+            city,
+            state,
+            pincode,
+        });
 
-        if (isExist) {
-            return res.status(250).json({ message: "Change Last Name..." });
-        } else {
-            const newData = new BusinessData({
-                first_name,
-                last_name,
-                email,
-                company_name,
-                field,
-                budget,
-                mobile,
-                address,
-                city,
-                state,
-                pincode,
-            });
-            await newData.save();
-            return res.status(201).json({ message: 'Your Data Submitted Successfully...' });
-        }
+        await newData.save();
+        return res.status(201).json({ message: 'Your Data Submitted Successfully...' });
     } catch (error) {
         console.log(error.message, 'business-form');
         return res.status(500).json({ message: 'Internal Server Error...' });

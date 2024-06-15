@@ -20,6 +20,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(bodyParser.json());
 
 // Your other routes and middleware
 app.use('/auth/business-form', require('./Routes/businessForm'))
